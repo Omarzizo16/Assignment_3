@@ -1,0 +1,304 @@
+{
+  "info": {
+    "name": "Assignment 3 - Node.js CRUD API",
+    "description": "Complete CRUD operations for User Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Add User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Omar Abdelaziz\",\n  \"email\": \"omar.abdelaziz@example.com\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Creates a new user in the system. Validates that the email doesn't already exist."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Retrieves all users from the system."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "1"]
+            },
+            "description": "Retrieves a specific user by their ID. Replace '1' with the actual user ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Update User by ID",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Omar Abdelaziz\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "1"]
+            },
+            "description": "Updates an existing user's information. Only include fields you want to update. Replace '1' with the actual user ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "1"]
+            },
+            "description": "Deletes a user from the system by their ID. Replace '1' with the actual user ID."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Cases",
+      "item": [
+        {
+          "name": "Add User - Duplicate Email Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Duplicate User\",\n  \"email\": \"omar.abdelaziz@example.com\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Tests that the system prevents duplicate emails. Should return 409 error."
+          },
+          "response": []
+        },
+        {
+          "name": "Add User - Missing Required Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Tests validation for required fields. Should return 400 error because email is missing."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID - Not Found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "999"]
+            },
+            "description": "Tests fetching a non-existent user. Should return 404 error."
+          },
+          "response": []
+        },
+        {
+          "name": "Update User - Invalid ID",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user/abc",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "abc"]
+            },
+            "description": "Tests updating with invalid ID format. Should return 400 error."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User - Non-existent",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/user/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "999"]
+            },
+            "description": "Tests deleting a non-existent user. Should return 404 error."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sample User Data",
+      "item": [
+        {
+          "name": "Add User - Mohamed",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Mohamed omar\",\n  \"email\": \"mohamed.omar@example.com\",\n  \"age\": 28\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Sample user creation"
+          },
+          "response": []
+        },
+        {
+          "name": "Add User - Adam",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Adam omar\",\n  \"email\": \"adam.omar@example.com\",\n  \"age\": 32\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Sample user creation"
+          },
+          "response": []
+        },
+        {
+          "name": "Add User - Nada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nada Omar\",\n  \"email\": \"nada.omar@example.com\",\n  \"age\": 24\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            },
+            "description": "Sample user creation"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
